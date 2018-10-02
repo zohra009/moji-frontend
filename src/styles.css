@@ -1,0 +1,34 @@
+#content {
+  background: (firebrick) no-repeat center center fixed;
+  background-size: cover;
+  opacity: 10;
+  height: 100%;
+}
+div {
+  background-image:
+      url("https://image.shutterstock.com/image-vector/colorful-memphis-seamless-pattern-doodle-260nw-524009155.jpg");
+}
+#welcome {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 5em;
+  color: #bf1b3b;
+  text-shadow: 1px 1px #000;
+}
+
+#intro {
+  font-family: 'Overpass', sans-serif!important;
+  font-size: 20px;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+}
+
+
+.tracks {
+  margin-left: 100px;
+}
+
+.tracks > h4 {
+  font-family: 'Overpass', sans-serif!important;
+  color: #fff;
+  text-shadow: 1px 1px #000;
+}

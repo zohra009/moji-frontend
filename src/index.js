@@ -42,54 +42,23 @@ document.addEventListener('keydown', keyDownHandler)
 
 function setup() {
 	sounds = {
-		coin: loadSound("assets/coin.wav"),
-		horn: loadSound("assets/horn.wav"),
-		beep: loadSound("assets/musicnote1.wav"),
-		boop: loadSound("assets/musicnote6.wav"),
-		ping: loadSound("assets/musicnote5.wav"),
-		rockBeat: loadSound("assets/rockBeat.wav"),
-		funkBeat: loadSound("assets/funkBeat.wav"),
-		shuffleBeat: loadSound("assets/shuffleBeat.wav"),
-		airhorn: loadSound("assets/airhorn.mp3")
+		coin: loadSound("sounds/coin.wav"),
+		horn: loadSound("sounds/horn.wav"),
+		beep: loadSound("sounds/musicnote1.wav"),
+		boop: loadSound("sounds/musicnote6.wav"),
+		ping: loadSound("sounds/musicnote5.wav"),
+		rockBeat: loadSound("sounds/rockBeat.wav"),
+		funkBeat: loadSound("sounds/funkBeat.wav"),
+		shuffleBeat: loadSound("sounds/shuffleBeat.wav"),
+		airhorn: loadSound("sounds/airhorn.mp3")
 	}
 	createCanvas(0, 0);
 }
- function clickHandler(e){
-     if(e.target.className === "sound")
-     //if we record do the following
-     if(recording_track > 0){
-     e.preventDefault()
-     sounds[e.target.id].play()
-     sounds[e.traget.id]setVolume(0.3)
-     eventItem = e.target.id
-     eventObj = {sound: eventItem, time: eventTime}
-     eventArray[recording_track].push(eventObj) //push eventobj into the eventArray
-     // play sound if recoding is not occuring
-    } else{
-       sounds.[e.target.id].play()
-       sounds[e.target.id].setVolume(0.3)
-    }
-    } else if(e.target.className === "record"){ //if we're press record button
-    if(e.target.innerText === "Record") //if it's record
-      recording_track = parseInt(e.target.dataset.id)
-      startRecording(e.timestamp, recording_track)
-      eventItem = 'Record'
-      eventTime = e.timeStamp
-      eventObj = {sound: eventItem, time: eventTime}
-      eventArray[recording_track.push(eventObj)]
-    } else{
-    resetRec() //if not recorded reset it
-    }
-  //if we press play do the follwoing
-} else if(e.target.className === "play"){
-  current_track = parseInt(e.target.dataset.id) //get the integer for that play time
-    if(e.target.id === "play_all"){
-      //play entire song
-      let mergeTrack = mergeTrack()
-      playTrack(mergeTrack)
-    } else {
-      //play a single track
-      soundTimesArray = mapArray(current_track)
-      playTrack(soundTimesArray)
-    }
+function clickHandler(e){
+   //Inside of your clickhandler function, call playSound
+  playSound(e)
+}
+function playSound(e){
+	sounds[e.target.id].play()
+	sounds[e.target.id].setVolume(0.3)
 }

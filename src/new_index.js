@@ -1,7 +1,12 @@
 hello = document.querySelector("#hello")
-// document.addEventListener('keydown', keyDownHandler)
+document.addEventListener('keydown', clickHandlerRecord)
 document.addEventListener('click', clickHandler)
 
+
+let eventArray = []
+let rec_start = 0
+let recording_track = 0
+let current_track = 0
 // eventArray[0] = reserved, eventArray[1] = track 1, eventArray[2] = track 2, eventArray[3] = track 3
 
 function setup() {
@@ -28,6 +33,50 @@ function setup() {
 
 function draw() {};
 
+function clickHandlerRecord(e) {
+	// if the button is a sound
+	if (e.target.className === "sound") {
+			// if we are "recording"
+			if (recording_track > 0){
+			e.preventDefault()
+			sounds[e.target.id].play()
+			sounds[e.target.id].setVolume(0.3)
+			eventItem = e.target.id
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			// if not recording, just plays sound
+			} else {
+				sounds[e.target.id].play()
+				sounds[e.target.id].setVolume(0.3)
+			}
+		// if the button is "record"
+		} else if (e.target.className === "record"){
+			if (e.target.innerText === "Record") {
+				recording_track = parseInt(e.target.dataset.id)
+				startRecording(e.timeStamp, recording_track)
+				eventItem = 'record'
+				eventTime = e.timeStamp
+				eventObj = {sound: eventItem, time: eventTime}
+				eventArray[recording_track].push(eventObj)
+			} else {
+				resetRec()
+			}
+		// if the button is "play"
+		} else if (e.target.className === "play"){
+		current_track = parseInt(e.target.dataset.id)
+			if (e.target.id === "play_all") {
+				// play the entire song
+				let mergedTrack = mergeTracks()
+				playTrack(mergedTrack)
+			} else {
+				// play an individual track
+			soundTimesArray = mapArray(current_track)
+			playTrack(soundTimesArray)
+			}
+	}
+}
+
 // function clickHandler(e) {
 // 	// if the button is a sound
 //   // console.log(e.target);
@@ -39,8 +88,60 @@ function draw() {};
 // }
 
 function clickHandler(e) {
-  // console.log(e.key);
+	if (recording_track > 0){
 		switch (e.target.id){
+			case '1' :
+			e.preventDefault()
+			sounds['coin'].play()
+			sounds['coin'].setVolume(0.3)
+			eventItem = 'coin'
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			break
+			case '2' :
+			e.preventDefault()
+			sounds['horn'].play()
+			sounds['horn'].setVolume(0.3)
+			eventItem = 'horn'
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			break
+			case '3' :
+			e.preventDefault()
+			sounds['beep'].play()
+			sounds['beep'].setVolume(0.3)
+			eventItem = 'beep'
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			break
+			case '4' :
+			e.preventDefault()
+			sounds['boop'].play()
+			sounds['boop'].setVolume(0.3)
+			eventItem = 'boop'
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			break
+			case '5' :
+			e.preventDefault()
+			sounds['ping'].play()
+			sounds['ping'].setVolume(0.3)
+			eventItem = 'ping'
+			eventTime = e.timeStamp
+			eventObj = {sound: eventItem, time: eventTime}
+			eventArray[recording_track].push(eventObj)
+			break
+			case 'airhorn' :
+			sounds['airhorn'].play()
+			sounds['airhorn'].setVolume(0.5)
+			break
+		}
+	} else {
+  		switch (e.target.id){
 			case 'coin' :
 				sounds['coin'].play()
 				sounds['coin'].setVolume(0.7)
@@ -91,3 +192,4 @@ function clickHandler(e) {
           break
 		}
 	}
+}

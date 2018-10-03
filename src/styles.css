@@ -11,6 +11,19 @@
   left: 0;
 }
 
+.instruments{
+  /* border: 5px solid #e9a1b9; */
+  background-color: #e9a1b9;
+}
+
+.tracks{
+  background-color: #7eb8ac;
+  border: 5px solid;
+}
+h4{
+  background-color:
+  #01104b; 
+}
 div {
   background-image:
       url("https://image.shutterstock.com/image-vector/colorful-memphis-seamless-pattern-doodle-260nw-524009155.jpg");

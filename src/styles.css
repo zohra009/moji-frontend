@@ -4,6 +4,13 @@
   opacity: 10;
   height: 100%;
 }
+#img.source-image {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 div {
   background-image:
       url("https://image.shutterstock.com/image-vector/colorful-memphis-seamless-pattern-doodle-260nw-524009155.jpg");
@@ -18,7 +25,7 @@ div {
 #intro {
   font-family: 'Overpass', sans-serif!important;
   font-size: 20px;
-  color: #fff;
+  color: #bf1b3b;
   text-shadow: 1px 1px #000;
 }
 
@@ -29,6 +36,6 @@ div {
 
 .tracks > h4 {
   font-family: 'Overpass', sans-serif!important;
-  color: #fff;
+  color: #bf1b3b;
   text-shadow: 1px 1px #000;
 }

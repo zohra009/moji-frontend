@@ -1,13 +1,15 @@
-hello = document.querySelector("#hello")
-document.addEventListener('keydown', clickHandlerRecord)
+let hello = document.getElementById("hello")
+
 document.addEventListener('click', clickHandler)
 
+var mic, recorder, soundFile;
+var state = 0; // mousePress will increment from Record, to Stop, to Play
 
-let eventArray = []
-let rec_start = 0
-let recording_track = 0
-let current_track = 0
-// eventArray[0] = reserved, eventArray[1] = track 1, eventArray[2] = track 2, eventArray[3] = track 3
+
+function preload()
+{
+  // img = loadImage("background_img.png");
+}
 
 function setup() {
 	sounds = {
@@ -17,131 +19,80 @@ function setup() {
 		boop: loadSound("sounds/musicnote6.wav"),
 		ping: loadSound("sounds/musicnote5.wav"),
 		rockBeat: loadSound("sounds/rockBeat.wav"),
-		funkBeat: loadSound("sounds/funkBeat.wav"),
+		gnatattack_hit: loadSound("sounds/gnatattack_hit.wav"),
 		shuffleBeat: loadSound("sounds/shuffleBeat.wav"),
 		airhorn: loadSound("sounds/airhorn.mp3"),
 		amy_winehouse_best_friends: loadSound("sounds/amy_winehouse_best_friends.mp3"),
 		explode: loadSound("sounds/explode.wav"),
 		funkBeat: loadSound("sounds/funkBeat.wav"),
 		gnatattack_AAAUUUGGHHH: loadSound("sounds/gnatattack_AAAUUUGGHHH.wav"),
-		rockBeat: loadSound("sounds/rockBeat.wav"),
+		dogundo: loadSound("sounds/dogundo.wav"),
 		someSortOfDrumThing: loadSound("sounds/some sort of drum thing.wav"),
 		yosiDrumLoop: loadSound("sounds/yoshi drum loop.wav"),
+		erase1: loadSound("sounds/erase1.wav"),
 	}
-	createCanvas(0, 0);
+	let canvas = createCanvas(300,50);
+	// console.log(sounds);
+		// let img = loadImage('background_img.png')
+		// image(img, 0, 0)
+	  background(231, 180, 171);
+		// image(img, 0, 1000)
+		// console.log('render image', img, 'function', image(img, 0, 0));
+	  fill(0);
+	  text('Click 2 start recording', 20, 20);
+
+	  // create an audio in
+	  mic = new p5.AudioIn();
+
+	  // users must manually enable their browser microphone for recording to work properly!
+	  mic.start();
+
+	  // create a sound recorder
+	  recorder = new p5.SoundRecorder();
+
+	  // connect the mic to the recorder
+	  recorder.setInput(mic);
+
+	  // create an empty sound file that we will use to playback the recording
+	  soundFile = new p5.SoundFile();
+		// createCanvas(0, 0);
+
+		canvas.parent(hello)
+
+	}
+
+	function mousePressed(event) {
+		if (event.target.id !== 'defaultCanvas0') {
+			return; //finish function; return exits function
+		}
+	  // use the '.enabled' boolean to make sure user enabled the mic (otherwise we'd record silence)
+	  if (state === 0 && mic.enabled) {
+
+	    // Tell recorder to record to a p5.SoundFile which we will use for playback
+	    recorder.record(soundFile);
+
+	    background(255,0,0);
+	    text('Recording now! Click to stop.', 20, 20);
+	    state += 1;
+	  }
+
+	  else if (state === 1) {
+	    recorder.stop(); // stop recorder, and send the result to soundFile
+
+	    background(0,255,0);
+	    text('Recording stopped. Click to play & save', 20, 20);
+	    state++;
+	  }
+
+	  else if (state === 2) {
+	    soundFile.play(); // play the result!
+	  }
 }
 
 function draw() {};
 
-function clickHandlerRecord(e) {
-	// if the button is a sound
-	if (e.target.className === "sound") {
-			// if we are "recording"
-			if (recording_track > 0){
-			e.preventDefault()
-			sounds[e.target.id].play()
-			sounds[e.target.id].setVolume(0.3)
-			eventItem = e.target.id
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			// if not recording, just plays sound
-			} else {
-				sounds[e.target.id].play()
-				sounds[e.target.id].setVolume(0.3)
-			}
-		// if the button is "record"
-		} else if (e.target.className === "record"){
-			if (e.target.innerText === "Record") {
-				recording_track = parseInt(e.target.dataset.id)
-				startRecording(e.timeStamp, recording_track)
-				eventItem = 'record'
-				eventTime = e.timeStamp
-				eventObj = {sound: eventItem, time: eventTime}
-				eventArray[recording_track].push(eventObj)
-			} else {
-				resetRec()
-			}
-		// if the button is "play"
-		} else if (e.target.className === "play"){
-		current_track = parseInt(e.target.dataset.id)
-			if (e.target.id === "play_all") {
-				// play the entire song
-				let mergedTrack = mergeTracks()
-				playTrack(mergedTrack)
-			} else {
-				// play an individual track
-			soundTimesArray = mapArray(current_track)
-			playTrack(soundTimesArray)
-			}
-	}
-}
-
-// function clickHandler(e) {
-// 	// if the button is a sound
-//   // console.log(e.target);
-// 	if (e.target.className === "sound"){
-// 		sounds[e.target.id].play()
-// 		sounds[e.target.id].setVolume(0.3)
-//   }
-// 		// if the button is "record"
-// }
-
 function clickHandler(e) {
-	if (recording_track > 0){
-		switch (e.target.id){
-			case '1' :
-			e.preventDefault()
-			sounds['coin'].play()
-			sounds['coin'].setVolume(0.3)
-			eventItem = 'coin'
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			break
-			case '2' :
-			e.preventDefault()
-			sounds['horn'].play()
-			sounds['horn'].setVolume(0.3)
-			eventItem = 'horn'
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			break
-			case '3' :
-			e.preventDefault()
-			sounds['beep'].play()
-			sounds['beep'].setVolume(0.3)
-			eventItem = 'beep'
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			break
-			case '4' :
-			e.preventDefault()
-			sounds['boop'].play()
-			sounds['boop'].setVolume(0.3)
-			eventItem = 'boop'
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			break
-			case '5' :
-			e.preventDefault()
-			sounds['ping'].play()
-			sounds['ping'].setVolume(0.3)
-			eventItem = 'ping'
-			eventTime = e.timeStamp
-			eventObj = {sound: eventItem, time: eventTime}
-			eventArray[recording_track].push(eventObj)
-			break
-			case 'airhorn' :
-			sounds['airhorn'].play()
-			sounds['airhorn'].setVolume(0.5)
-			break
-		}
-	} else {
-  		switch (e.target.id){
+  	switch (e.target.id){
 			case 'coin' :
 				sounds['coin'].play()
 				sounds['coin'].setVolume(0.7)
@@ -178,18 +129,32 @@ function clickHandler(e) {
      		 sounds['funkBeat'].play()
      		 sounds['funkBeat'].setVolume(0.5)
      		break
-      case 'rockBeat' :
-       	 sounds['rockBeat'].play()
-       	 sounds['rockBeat'].setVolume(0.5)
+      case 'gnatattack_hit' :
+       	 sounds['gnatattack_hit'].play()
+       	 sounds['gnatattack_hit'].setVolume(0.5)
        	break
       case 'gnatattack_AAAUUUGGHHH' :
-         	sounds['gnatattack_AAAUUUGGHHH'].play()
-         	sounds['gnatattack_AAAUUUGGHHH'].setVolume(0.5)
-         break
+        sounds['gnatattack_AAAUUUGGHHH'].play()
+      	sounds['gnatattack_AAAUUUGGHHH'].setVolume(0.5)
+      	break
+			case "spacebar" :
+				break
       case 'yosiDrumLoop' :
-          sounds['yosiDrumLoop'].play()
-          sounds['yosiDrumLoop'].setVolume(0.5)
-          break
-		}
+      	sounds['yosiDrumLoop'].play()
+      	sounds['yosiDrumLoop'].setVolume(0.5)
+      	break
+			case 'dogundo' :
+	      sounds['dogundo'].play()
+	      sounds['dogundo'].setVolume(0.5)
+	      break
+			case 'funkBeat' :
+		     sounds['funkBeat'].play()
+		     sounds['funkBeat'].setVolume(0.5)
+		     break
+			case 'erase1' :
+				 sounds['erase1'].play()
+				 sounds['erase1'].setVolume(0.5)
+				 break
+
 	}
 }

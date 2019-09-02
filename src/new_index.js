@@ -8,7 +8,7 @@ var state = 0; // mousePress will increment from Record, to Stop, to Play
 
 function preload()
 {
-	
+
   // img = loadImage("background_img.png");
 }
 

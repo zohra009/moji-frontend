@@ -8,6 +8,7 @@ var state = 0; // mousePress will increment from Record, to Stop, to Play
 
 function preload()
 {
+	
   // img = loadImage("background_img.png");
 }
 
@@ -32,7 +33,7 @@ function setup() {
 		erase1: loadSound("sounds/erase1.wav"),
 	}
 	let canvas = createCanvas(300,50);
-	// console.log(sounds);
+	 // console.log(sounds);
 		// let img = loadImage('background_img.png')
 		// image(img, 0, 0)
 	  background(231, 180, 171);
@@ -117,40 +118,40 @@ function clickHandler(e) {
   			sounds['airhorn'].play()
   			sounds['airhorn'].setVolume(0.5)
 			   break
-      case 'amy_winehouse_best_friends' :
-  			sounds['amy_winehouse_best_friends'].play()
-  			sounds['amy_winehouse_best_friends'].setVolume(0.5)
-			   break
-      case 'explode' :
-   		   sounds['explode'].play()
-   			 sounds['explode'].setVolume(0.5)
-   			break
-      case 'funkBeat' :
-     		 sounds['funkBeat'].play()
-     		 sounds['funkBeat'].setVolume(0.5)
-     		break
-      case 'gnatattack_hit' :
-       	 sounds['gnatattack_hit'].play()
-       	 sounds['gnatattack_hit'].setVolume(0.5)
-       	break
-      case 'gnatattack_AAAUUUGGHHH' :
-        sounds['gnatattack_AAAUUUGGHHH'].play()
-      	sounds['gnatattack_AAAUUUGGHHH'].setVolume(0.5)
-      	break
-			case "spacebar" :
-				break
-      case 'yosiDrumLoop' :
-      	sounds['yosiDrumLoop'].play()
-      	sounds['yosiDrumLoop'].setVolume(0.5)
-      	break
-			case 'dogundo' :
-	      sounds['dogundo'].play()
-	      sounds['dogundo'].setVolume(0.5)
-	      break
+			case 'amy_winehouse_best_friends' :
+					sounds['amy_winehouse_best_friends'].play()
+					sounds['amy_winehouse_best_friends'].setVolume(0.5)
+					break
+			case 'explode' :
+				sounds['explode'].play()
+					sounds['explode'].setVolume(0.5)
+					break
 			case 'funkBeat' :
-		     sounds['funkBeat'].play()
-		     sounds['funkBeat'].setVolume(0.5)
-		     break
+					sounds['funkBeat'].play()
+					sounds['funkBeat'].setVolume(0.5)
+					break
+			case 'gnatattack_hit' :
+				sounds['gnatattack_hit'].play()
+				sounds['gnatattack_hit'].setVolume(0.5)
+				break
+			case 'gnatattack_AAAUUUGGHHH' :
+				sounds['gnatattack_AAAUUUGGHHH'].play()
+				sounds['gnatattack_AAAUUUGGHHH'].setVolume(0.5)
+				break
+					case "spacebar" :
+						break
+			case 'yosiDrumLoop' :
+				sounds['yosiDrumLoop'].play()
+				sounds['yosiDrumLoop'].setVolume(0.5)
+				break
+			case 'dogundo' :
+				sounds['dogundo'].play()
+				sounds['dogundo'].setVolume(0.5)
+				break
+			case 'funkBeat' :
+				sounds['funkBeat'].play()
+				sounds['funkBeat'].setVolume(0.5)
+				break
 			case 'erase1' :
 				 sounds['erase1'].play()
 				 sounds['erase1'].setVolume(0.5)
